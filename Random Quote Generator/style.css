@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.container {
+    padding: 20px;
+}
+
+.quote-box {
+    background: #fff;
+    padding: 60px 50px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 700px;
+    text-align: center;
+    position: relative;
+}
+
+.quote-icon {
+    font-size: 80px;
+    color: #667eea;
+    opacity: 0.3;
+    line-height: 0;
+    margin-bottom: 20px;
+}
+
+.quote-text {
+    font-size: 1.8rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-style: italic;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.new-quote-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.new-quote-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+}
+
+.new-quote-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .quote-box {
+        padding: 40px 30px;
+    }
+    
+    .quote-text {
+        font-size: 1.4rem;
+    }
+    
+    .quote-author {
+        font-size: 1rem;
+    }
+}
