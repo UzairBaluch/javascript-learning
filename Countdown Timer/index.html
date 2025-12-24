@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 400px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80px;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .start-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .start-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background: #f093fb;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background: #e681ea;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .finished {
+            color: #e74c3c;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ Countdown Timer</h1>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <div>
+                    <label>Hours</label>
+                    <input type="number" id="hours" min="0" max="23" value="0">
+                </div>
+                <div>
+                    <label>Minutes</label>
+                    <input type="number" id="minutes" min="0" max="59" value="1">
+                </div>
+                <div>
+                    <label>Seconds</label>
+                    <input type="number" id="seconds" min="0" max="59" value="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="display" id="display">00:01:00</div>
+
+        <div class="buttons">
+            <button class="start-btn" id="startBtn">Start</button>
+            <button class="reset-btn" id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
