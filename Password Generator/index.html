@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .password-display {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #e0e0e0;
+        }
+
+        #passwordOutput {
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+            color: #333;
+            word-break: break-all;
+            flex: 1;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 15px;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .settings {
+            margin-bottom: 25px;
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .setting-item input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .generate-btn:hover {
+            background: #6a3f8f;
+        }
+
+        .strength-indicator {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .strength-weak {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .strength-medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .strength-strong {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Password Generator</h1>
+        
+        <div class="password-display">
+            <div id="passwordOutput">Click Generate to create password</div>
+            <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
+
+        <div class="settings">
+            <div class="setting-item">
+                <label>Password Length</label>
+                <input type="number" id="lengthInput" min="4" max="32" value="12">
+            </div>
+
+            <div class="setting-item">
+                <label>Include:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="uppercaseCheck" checked>
+                    <label for="uppercaseCheck">Uppercase Letters (A-Z)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="lowercaseCheck" checked>
+                    <label for="lowercaseCheck">Lowercase Letters (a-z)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="numbersCheck" checked>
+                    <label for="numbersCheck">Numbers (0-9)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="symbolsCheck">
+                    <label for="symbolsCheck">Symbols (!@#$%^&*)</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="generate-btn" id="generateBtn">Generate Password</button>
+
+        <div class="strength-indicator" id="strengthIndicator"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
