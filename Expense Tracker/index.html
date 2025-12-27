@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Tracker</h1>
+        
+        <!-- Total Display -->
+        <div class="total-section">
+            <h2>Total Expenses</h2>
+            <p class="total-amount">$0.00</p>
+        </div>
+
+        <!-- Add Expense Form -->
+        <div class="form-section">
+            <h3>Add New Expense</h3>
+            <input type="text" id="description" placeholder="Description (e.g., Groceries)">
+            <input type="number" id="amount" placeholder="Amount" step="0.01">
+            <select id="category">
+                <option value="">Select Category</option>
+                <option value="Food">🍔 Food</option>
+                <option value="Transport">🚗 Transport</option>
+                <option value="Entertainment">🎮 Entertainment</option>
+                <option value="Shopping">🛒 Shopping</option>
+                <option value="Bills">💡 Bills</option>
+                <option value="Other">📦 Other</option>
+            </select>
+            <button id="addBtn">Add Expense</button>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <label>Filter by Category:</label>
+            <select id="filterCategory">
+                <option value="All">All Categories</option>
+                <option value="Food">🍔 Food</option>
+                <option value="Transport">🚗 Transport</option>
+                <option value="Entertainment">🎮 Entertainment</option>
+                <option value="Shopping">🛒 Shopping</option>
+                <option value="Bills">💡 Bills</option>
+                <option value="Other">📦 Other</option>
+            </select>
+        </div>
+
+        <!-- Expenses List -->
+        <div id="expensesList" class="expenses-list">
+            <!-- Expenses will appear here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
