@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs Component</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 18px 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .tabs-content {
+            padding: 30px;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .content p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .content ul {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .content li {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs-header">
+            <button class="tab active">About</button>
+            <button class="tab">Skills</button>
+            <button class="tab">Projects</button>
+            <button class="tab">Contact</button>
+        </div>
+
+        <div class="tabs-content">
+            <div class="content active">
+                <div class="icon">👨‍💻</div>
+                <h2>About Me</h2>
+                <p>Hello! I'm a passionate developer.</p>
+            </div>
+
+            <div class="content">
+                <div class="icon">⚡</div>
+                <h2>My Skills</h2>
+                <ul>
+                    <li>HTML, CSS, JavaScript</li>
+                    <li>React (learning)</li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <div class="icon">🚀</div>
+                <h2>My Projects</h2>
+                <ul>
+                    <li>Weather App</li>
+                    <li>Todo App</li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <div class="icon">📧</div>
+                <h2>Contact Me</h2>
+                <ul>
+                    <li>Email: dev@example.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
