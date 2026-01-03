@@ -92,22 +92,35 @@ I'm Uzair, a retail manager from Pakistan working in Oman, teaching myself to co
 
 ---
 
-## 🔥 Real-World Projects
+## 🔥 Real-World Production Projects
 
-Beyond the 30-day challenge, I've built production applications:
+Beyond the 30-day challenge, I've built **live production systems** serving real customers:
 
-**Masar Order Management System**
+### **Order Tracking System** 🌐 [Try it Live!](https://anaqatalameer.com/order-tracking/)
+*Currently in production, handling real customer orders daily*
+
+**Features:**
 - Firebase cloud storage integration
-- Thermal receipt printing
+- Thermal receipt printing system
 - Multi-language support (English/Arabic)
-- Customer order tracking & payment management
+- Real-time order tracking & status updates
+- Customer payment management
+- Mobile-responsive design
 
-**Queue Management System**
+**Tech Stack:** JavaScript, Firebase, HTML/CSS, Thermal Printing API
+
+### **Queue Management System**
+*Production system for retail operations*
+
+**Features:**
 - Desktop admin interface
 - Mobile staff app
-- Firebase real-time sync
-- Thermal printing
+- Firebase real-time synchronization
+- Thermal printing integration
 - Arabic voice announcements
+- Customer flow management
+
+**Impact:** Streamlined customer service operations, reduced wait times, improved staff coordination
 
 ---
 
