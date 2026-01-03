@@ -92,35 +92,26 @@ I'm Uzair, a retail manager from Pakistan working in Oman, teaching myself to co
 
 ---
 
-## 🔥 Real-World Production Projects
+## 🔥 Real-World Technical Experience
 
-Beyond the 30-day challenge, I've built **live production systems** serving real customers:
+Beyond learning projects, I have hands-on experience deploying and managing production systems:
 
-### **Order Tracking System** 🌐 [Try it Live!](https://anaqatalameer.com/order-tracking/)
-*Currently in production, handling real customer orders daily*
+### **Order Tracking System** 🌐 [Live Production System](https://anaqatalameer.com/order-tracking/)
+*Deployed, configured, and currently maintaining for real business operations*
 
-**Features:**
-- Firebase cloud storage integration
-- Thermal receipt printing system
-- Multi-language support (English/Arabic)
-- Real-time order tracking & status updates
-- Customer payment management
-- Mobile-responsive design
+**My Role:**
+- Deployed and configured the production system
+- Set up Firebase cloud storage integration
+- Configured thermal receipt printing functionality
+- Implemented multi-language support (English/Arabic)
+- Manage daily operations and customer data
+- Handle system maintenance and updates
 
-**Tech Stack:** JavaScript, Firebase, HTML/CSS, Thermal Printing API
+**Tech Stack:** Firebase, Thermal Printing API, Web Deployment
 
-### **Queue Management System**
-*Production system for retail operations*
+**Impact:** Successfully serving real customers daily, managing order tracking and payment processing for live business operations
 
-**Features:**
-- Desktop admin interface
-- Mobile staff app
-- Firebase real-time synchronization
-- Thermal printing integration
-- Arabic voice announcements
-- Customer flow management
-
-**Impact:** Streamlined customer service operations, reduced wait times, improved staff coordination
+**Skills Gained:** Production deployment, Firebase configuration, system maintenance, working with real customer data, troubleshooting live systems
 
 ---
 
