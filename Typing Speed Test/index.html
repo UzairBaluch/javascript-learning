@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>⌨️ Typing Speed Test</h1>
+        
+        <!-- Stats Display (hidden until test complete) -->
+        <div class="stats-container" id="statsContainer">
+            <div class="stat">
+                <span class="stat-label">WPM</span>
+                <span class="stat-value" id="wpmValue">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Accuracy</span>
+                <span class="stat-value" id="accuracyValue">0%</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Time</span>
+                <span class="stat-value" id="timeValue">0s</span>
+            </div>
+        </div>
+
+        <!-- Sample Text Display -->
+        <div class="text-display" id="textDisplay">
+            <!-- Text will be generated here with spans for each character -->
+        </div>
+
+        <!-- Input Area -->
+        <textarea 
+            id="typingInput" 
+            class="typing-input" 
+            placeholder="Click here and start typing..."
+            spellcheck="false"
+        ></textarea>
+
+        <!-- Timer -->
+        <div class="timer" id="timer">Time: 0s</div>
+
+        <!-- Reset Button -->
+        <button class="reset-btn" id="resetBtn">Try Again</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
