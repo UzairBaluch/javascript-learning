@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search with Debouncing | Project #28</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .search-container {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      #searchInput {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      #searchInput:focus {
+        border-color: #667eea;
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 20px;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+
+      .stat {
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      #userList {
+        list-style: none;
+      }
+
+      .user-item {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        transition: background 0.3s;
+      }
+
+      .user-item:hover {
+        background: #f8f9fa;
+      }
+
+      .user-item:last-child {
+        border-bottom: none;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        margin-right: 15px;
+      }
+
+      .user-info {
+        flex: 1;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 3px;
+      }
+
+      .user-email {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+      }
+
+      .no-results-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 20px;
+        color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔍 Search Users</h1>
+      <p class="subtitle">Type to search (with debouncing optimization)</p>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name or email..."
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-value" id="totalUsers">20</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Filtered</div>
+          <div class="stat-value" id="filteredCount">20</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Search Calls</div>
+          <div class="stat-value" id="searchCalls">0</div>
+        </div>
+      </div>
+
+      <ul id="userList"></ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
