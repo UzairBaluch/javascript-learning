@@ -1,12 +1,8 @@
 // ============================================
-// PROJECT #29: DATA TABLE SORT/FILTER
-// Skills: Array methods, sorting algorithms, filtering, DOM manipulation
+// DATA TABLE SORT/FILTER
 // ============================================
 
-// ============================================
-// EMPLOYEE DATA
-// ============================================
-// Array of employee objects with id, name, department, position, salary
+// EMPLOYEE DATA - Array of employee objects
 let employees = [
   {
     id: 1,
@@ -115,150 +111,101 @@ let employees = [
   },
 ];
 
-// ============================================
-// STATE VARIABLES
-// ============================================
-// Track current sort column (name, department, salary)
-// Track sort direction (ascending or descending)
-// Store filtered results
+// STATE VARIABLES - Track current sort column and direction
 let currentSortColumn;
 let sortDirection;
-let filteredResults;
 
-// ============================================
-// DOM ELEMENTS
-// ============================================
-// Get search input
-// Get table body
-// Get all sort buttons
-// Get stats elements (visibleCount, totalCount)
+// DOM ELEMENTS - Get search input, table body, sort buttons, and stats
 const searchInput = document.getElementById("searchInput");
-const dataTable = document.getElementById("dataTable");
 const tableBody = document.getElementById("tableBody");
-const stats = document.getElementById("stats");
 const visibleCount = document.getElementById("visibleCount");
 const totalCount = document.getElementById("totalCount");
 const sortbtn = document.querySelectorAll(".sort-btn");
-// ============================================
-// RENDER TABLE FUNCTION
-// ============================================
-// Clear table body first
-// Loop through data array
-// For each employee:
-// Create table row
-// Add cells for: id, name, department, position, salary
-// Format salary with $ and commas
-// Append row to tbody
-// If no data, show "No employees found" message
-// Update stats (visible count, total count)
-// ============================================
-// RENDER TABLE FUNCTION
-// ============================================
+
+// RENDER TABLE - Display employees in table with formatted data
 function renderTable(dataArray) {
   tableBody.innerHTML = "";
 
+  // Show empty message if no employees match
   if (dataArray.length === 0) {
     tableBody.innerHTML = `<tr><td colspan="5" class="no-results">No employees found</td></tr>`;
     return;
   }
 
+  // Create table row for each employee
   dataArray.forEach((employee) => {
     let rowHtml = `<tr>
-    <td>${employee.id} </td>
-      <td>${employee.name} </td>
-        <td>${employee.department} </td>
-          <td>${employee.position} </td>
-            <td>$${employee.salary.toLocaleString("en-US")} </td>
+      <td>${employee.id}</td>
+      <td>${employee.name}</td>
+      <td>${employee.department}</td>
+      <td>${employee.position}</td>
+      <td>$${employee.salary.toLocaleString("en-US")}</td>
     </tr>`;
     tableBody.innerHTML += rowHtml;
   });
+
+  // Update stats showing visible vs total employees
   visibleCount.textContent = dataArray.length;
   totalCount.textContent = employees.length;
 }
 
-// ============================================
-// SEARCH FILTER
-// ============================================
-
-// STEP 1: Listen for input event on searchInput
+// SEARCH FILTER - Filter employees by name, department, or position
 searchInput.addEventListener("input", (event) => {
-  // STEP 2: Get search term (lowercase for case-insensitive)
   let searchTerm = event.target.value.toLowerCase();
-  // STEP 3: Filter employees array:
-  // Use .filter() method
-  // Check if search term exists in:
-  // name.toLowerCase() OR
-  // department.toLowerCase() OR
-  // position.toLowerCase()
-  // Use .includes() to check if search term is in each field
+
+  // Filter employees based on search term (case-insensitive)
   let filteredResult = employees.filter((employee) => {
-    if (
+    return (
       employee.name.toLowerCase().includes(searchTerm) ||
       employee.department.toLowerCase().includes(searchTerm) ||
       employee.position.toLowerCase().includes(searchTerm)
-    ) {
-      return true;
-    }
+    );
   });
-  // STEP 4: Call renderTable with filtered results
+
   renderTable(filteredResult);
 });
 
-// ============================================
-// SORT FUNCTIONALITY
-// ============================================
-
-// STEP 1: Add click listener to each sort button (loop through sortbtn)
+// SORT FUNCTIONALITY - Sort table by clicked column
 sortbtn.forEach((btn) => {
   btn.addEventListener("click", (event) => {
-    // STEP 2: Get which column to sort by (from data-sort attribute)
     let colName = event.target.dataset.sort;
-    // STEP 3: Check if clicking same button (compare with currentSortColumn)
-    // If same button: toggle sortDirection (ascending ↔ descending)
-    // If different button: set sortDirection to ascending
+
+    // Toggle sort direction if same column, reset to ascending if different
     if (colName === currentSortColumn) {
       sortDirection = sortDirection === "asc" ? "desc" : "asc";
     } else {
       sortDirection = "asc";
     }
-    // STEP 4: Update currentSortColumn to the new column
     currentSortColumn = colName;
-    // STEP 5: Sort the employees array
-    // Use .sort() method
-    // For strings (name, department, position): compare with < and >
-    // For numbers (salary): subtract (a.salary - b.salary)
-    // Apply direction (reverse if descending)
-    let result;
+
+    // Sort employees array
     let sortedEmployees = employees.sort((a, b) => {
+      let result;
+
+      // Number sorting for salary
       if (colName === "salary") {
         result = a.salary - b.salary;
-        if (sortDirection === "desc") {
-          result = result * -1;
-        }
-        return result;
-      } else if (a[colName] < b[colName]) {
-        result = -1;
-      } else {
-        result = 1;
       }
+      // String sorting for name, department, position
+      else {
+        result = a[colName] < b[colName] ? -1 : 1;
+      }
+
+      // Reverse if descending order
       if (sortDirection === "desc") {
         result = result * -1;
       }
+
       return result;
     });
-    // STEP 6: Remove 'active' class from all buttons
-    sortbtn.forEach((btn) => {
-      btn.classList.remove("active");
-    });
-    // STEP 7: Add 'active' class to clicked button
+
+    // Update active button styling
+    sortbtn.forEach((btn) => btn.classList.remove("active"));
     btn.classList.add("active");
-    // STEP 8: Re-render table with sorted data
+
     renderTable(sortedEmployees);
   });
 });
 
-// ============================================
-// INITIAL RENDER
-// ============================================
-// Display all employees on page load
+// INITIAL RENDER - Display all employees on page load
 renderTable(employees);

@@ -1,21 +1,23 @@
+// ============================================
+// TEMPERATURE CONVERTER
+// ============================================
 
-// targeting the elems
+// DOM ELEMENTS - Get input fields, buttons, and result displays
 let celsiusInput = document.getElementById("celsiusInput");
 let celsiusBtn = document.getElementById("celsiusBtn");
 let fahrenheitResult = document.getElementById("fahrenheitResult");
 let fahrenheitInput = document.getElementById("fahrenheitInput");
 let fahrenheitBtn = document.getElementById("fahrenheitBtn");
 let celsiusResult = document.getElementById("celsiusResult");
-// converting the values and showing it to ui
-celsiusBtn.addEventListener("click", () => {
-  const result = (celsiusInput.value * 9) / 5 + 32; // tracting var and formula
 
-  fahrenheitResult.textContent = result; // updating to ui
+// CELSIUS TO FAHRENHEIT - Convert and display result
+celsiusBtn.addEventListener("click", () => {
+  const result = (celsiusInput.value * 9) / 5 + 32;
+  fahrenheitResult.textContent = result;
 });
 
-// converting the values and showing it to ui
+// FAHRENHEIT TO CELSIUS - Convert and display result
 fahrenheitBtn.addEventListener("click", () => {
-  const result = ((fahrenheitInput.value - 32) * 5) / 9; // tracting var and formula
-
-  celsiusResult.textContent = result; // updating to ui
+  const result = ((fahrenheitInput.value - 32) * 5) / 9;
+  celsiusResult.textContent = result;
 });

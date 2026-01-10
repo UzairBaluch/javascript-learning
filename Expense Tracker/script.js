@@ -1,4 +1,8 @@
-// grab elements for manupilation
+// ============================================
+// EXPENSE TRACKER
+// ============================================
+
+// DOM ELEMENTS - Get input fields, buttons, and display containers
 const description = document.getElementById("description");
 const amount = document.getElementById("amount");
 const category = document.getElementById("category");
@@ -6,116 +10,115 @@ const addBtn = document.getElementById("addBtn");
 const filterCategory = document.getElementById("filterCategory");
 const expensesList = document.getElementById("expensesList");
 const totalAmount = document.querySelector(".total-amount");
-// an empty arrray for epenses
+
+// STATE VARIABLE - Store all expenses
 let expenses = [];
-// getting saved data from localstorage
-let checkingSavedData = localStorage.getItem("expenses");
-// validtion if there is any saved data if found the parse it back to array from
-if (checkingSavedData !== null) {
-  expenses = JSON.parse(checkingSavedData);
+
+// LOAD SAVED EXPENSES - Retrieve expenses from localStorage on page load
+let savedExpenses = localStorage.getItem("expenses");
+if (savedExpenses !== null) {
+  expenses = JSON.parse(savedExpenses);
 }
-// a function to display expenses
+
+// DISPLAY EXPENSES - Render expense list to the screen
 function displayExpenses(expensesToShow = expenses) {
-  // seting the conatiner to empty
   expensesList.innerHTML = "";
-  // a loop to create new elems
-  expensesToShow.forEach((e) => {
-    expensesList.innerHTML += `<div class="expense-item">
 
-    <div class="expense-info"> 
-    <div class="expense-description"> 
-    ${e.description}
-    </div> 
-     <div class="expense-category"> 
-    ${e.category}
-    </div>
-    </div>  
-    
-    <div class="expense-amount">
-    $${e.amount} </div>
-    <button class="delete-btn" data-id="${e.id}"> Delete
-     </button>
-
-    </div>`;
+  expensesToShow.forEach((expense) => {
+    expensesList.innerHTML += `
+      <div class="expense-item">
+        <div class="expense-info"> 
+          <div class="expense-description">${expense.description}</div> 
+          <div class="expense-category">${expense.category}</div>
+        </div>  
+        <div class="expense-amount">$${expense.amount}</div>
+        <button class="delete-btn" data-id="${expense.id}">Delete</button>
+      </div>`;
   });
 }
-// adding functnality to button
+
+// ADD EXPENSE - Create new expense and save to localStorage
 addBtn.addEventListener("click", () => {
-  // getting from inputs
   let desc = description.value;
   let amt = Number(amount.value);
   let ctg = category.value;
-  // validtion if they are empty or not with an alert
+
+  // Validate inputs
   if (desc === "") {
-    alert("description is empty");
+    alert("Description is required");
     return;
   }
-  if (amt === "") {
-    alert("amount is empty");
+  if (amt === "" || amt <= 0) {
+    alert("Valid amount is required");
     return;
   }
   if (ctg === "") {
-    alert("category is empty");
+    alert("Category is required");
     return;
   }
-  // an object structer
+
+  // Create expense object
   let expenseObj = {
     id: Date.now(),
     description: desc,
     amount: amt,
     category: ctg,
   };
-  // adding to array
+
+  // Add to array and save
   expenses.push(expenseObj);
-  // saving in localstorage after conversion
   localStorage.setItem("expenses", JSON.stringify(expenses));
-  // seting inputs empty for new ones
+
+  // Clear inputs
   description.value = "";
   amount.value = "";
   category.value = "";
-  // calling the func
+
+  // Update display
   displayExpenses();
   calculateTotal();
 });
 
-// a function to calculate
+// CALCULATE TOTAL - Sum all expense amounts
 function calculateTotal() {
-  //  Calculate reduce returns a single number
-  const total = expenses.reduce((total, expense) => {
-    return total + expense.amount;
+  const total = expenses.reduce((sum, expense) => {
+    return sum + expense.amount;
   }, 0);
 
-  //  update it AFTER reduce is done OUTSIDE of it
   totalAmount.textContent = `$${total.toFixed(2)}`;
 }
-// adding functnality to button
+
+// DELETE EXPENSE - Remove expense when delete button clicked
 expensesList.addEventListener("click", (e) => {
-  // validation which button is clicked
   if (e.target.classList.contains("delete-btn")) {
-    // conver into number assign to var
     const expenseId = Number(e.target.dataset.id);
-    // filtering the clicked elem
+
+    // Filter out deleted expense
     expenses = expenses.filter((expense) => expense.id !== expenseId);
-    // saving in localstorage after conversion
+
+    // Save and update display
     localStorage.setItem("expenses", JSON.stringify(expenses));
-    // calling the func
     displayExpenses();
     calculateTotal();
   }
 });
-// adding functnality to category
+
+// FILTER BY CATEGORY - Show expenses for selected category
 filterCategory.addEventListener("change", () => {
-  // select the category vaalue from input
   const selectedCategory = filterCategory.value;
-  // valdation to the if all are slected
+
   if (selectedCategory === "All") {
-    displayExpenses();  // Shows all expenses
+    displayExpenses();
   } else {
-    // filtring the selected ones
-    const filtered = expenses.filter(expense => expense.category === selectedCategory);
-    displayExpenses(filtered);  // Shows only matching category
+    const filtered = expenses.filter(
+      (expense) => expense.category === selectedCategory
+    );
+    displayExpenses(filtered);
   }
+
+  calculateTotal();
 });
-// calling the func
+
+// INITIAL RENDER - Display expenses and total on page load
 displayExpenses();
 calculateTotal();

@@ -1,17 +1,23 @@
+// ============================================
+// BMI CALCULATOR
+// ============================================
 
-// Targeting Elems
+// DOM ELEMENTS - Get input fields, button, and result display areas
 let weight = document.getElementById("weight");
 let height = document.getElementById("height");
 let calculateBtn = document.getElementById("calculateBtn");
 let result = document.getElementById("result");
 let bmiValue = document.getElementById("bmiValue");
 let bmiCategory = document.getElementById("bmiCategory");
- // Working on button and functionalty to calculate and show it to ui
+
+// CALCULATE BMI - Listen for button click to calculate and display BMI
 calculateBtn.addEventListener("click", () => {
+  // Calculate BMI using formula: weight / (height * height), rounded to 2 decimals
   const bmiCalculation = (weight.value / (height.value * height.value)).toFixed(
     2
   );
-  // checking for category validation
+
+  // Determine BMI category based on standard ranges
   if (bmiCalculation < 18.5) {
     bmiCategory.textContent = "Underweight";
   } else if (bmiCalculation < 25) {
@@ -21,5 +27,7 @@ calculateBtn.addEventListener("click", () => {
   } else {
     bmiCategory.textContent = "Obese";
   }
+
+  // Display calculated BMI value
   bmiValue.textContent = bmiCalculation;
 });

@@ -1,78 +1,71 @@
-// SELECT ALL ELEMENTS for manupilation and adding functionalty
+// ============================================
+// DRAWING APP
+// ============================================
+
+// DOM ELEMENTS - Get canvas, controls, and display elements
 const colorPicker = document.getElementById("colorPicker");
 const brushSize = document.getElementById("brushSize");
 const brushSizeDisplay = document.getElementById("brushSizeDisplay");
 const clearBtn = document.getElementById("clearBtn");
 const canvas = document.getElementById("canvas");
 
-// GET CANVAS CONTEXT (2D drawing context)
-
-// VARIABLES TO TRACK DRAWING STATE
+// CANVAS CONTEXT - Get 2D drawing context
 const ctx = canvas.getContext("2d");
+
+// STATE VARIABLE - Track whether user is currently drawing
 let isDrawing = false;
 
-// FUNCTION: UPDATE BRUSH SIZE DISPLAY getting value from brushSize updating it into brushSizeDisplay
+// UPDATE BRUSH SIZE DISPLAY - Show current brush size value
 function updateBrushDisplay() {
   brushSizeDisplay.textContent = brushSize.value;
 }
 
-// FUNCTION: START DRAWING (when mouse is pressed down)
-// set drwing to true
-// a built in method beginPath that starts a new line
-// a built in method moveTo move the pen position to x or y
+// START DRAWING - Begin drawing when mouse is pressed down
 function startDrawing(e) {
   isDrawing = true;
   ctx.beginPath();
   ctx.moveTo(e.offsetX, e.offsetY);
 }
 
-// FUNCTION: DRAW (when mouse moves while pressed)
-// check if not drawing return
-// draw a line to the current mouse position)
-// show the line on canvas
-// start fresh for the next segment
+// DRAW - Continue drawing while mouse moves
 function draw(e) {
-  if (!isDrawing) {
-    return;
-  }
+  if (!isDrawing) return;
+
   ctx.lineTo(e.offsetX, e.offsetY);
   ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(e.offsetX, e.offsetY);
 }
 
-// FUNCTION: STOP DRAWING (when mouse is released or leaves canvas)
-// set drwing to false
+// STOP DRAWING - End drawing when mouse is released or leaves canvas
 function stopDraw() {
   isDrawing = false;
 }
-// FUNCTION: CLEAR CANVAS
-// a function that clears the entire canvas when the clear button is clicked
+
+// CLEAR CANVAS - Remove all drawings from canvas
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-// EVENT LISTENERS FOR CANVAS
-// EVENT LISTENERS when mouse is pressed
-// EVENT LISTENERS when mouse moves
-// EVENT LISTENERS when mouse is released
-// EVENT LISTENERS when mouse leaves canvas area
+// CANVAS EVENT LISTENERS - Handle mouse interactions for drawing
 canvas.addEventListener("mousedown", startDrawing);
 canvas.addEventListener("mousemove", draw);
 canvas.addEventListener("mouseup", stopDraw);
 canvas.addEventListener("mouseout", stopDraw);
 
-// EVENT LISTENERS FOR TOOLS
+// TOOL EVENT LISTENERS - Update brush color and size
 colorPicker.addEventListener("input", () => {
   ctx.strokeStyle = colorPicker.value;
 });
+
 brushSize.addEventListener("input", () => {
   ctx.lineWidth = brushSize.value;
   updateBrushDisplay();
 });
+
 clearBtn.addEventListener("click", clearCanvas);
 
-// INITIALIZE BRUSH SIZE DISPLAY
+// INITIALIZE - Set initial brush display and line style
 updateBrushDisplay();
 ctx.lineCap = "round";
 ctx.lineJoin = "round";

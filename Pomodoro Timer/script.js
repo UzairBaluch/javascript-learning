@@ -1,22 +1,15 @@
-// - timeLeft: stores number of SECONDS remaining (starts at 1500 for work mode)
-// - currentMode: stores STRING of which mode ('work', 'short', or 'long')
-// - isRunning: stores TRUE/FALSE - is timer currently counting down?
-// - sessionCount: stores NUMBER of completed work sessions (starts at 0)
-// - timerInterval: stores the setInterval ID so we can STOP it with clearInterval()
+// ============================================
+// POMODORO TIMER
+// ============================================
 
-let timeLeft = 1500;
-let currentMode = null;
-let isRunning = false;
-let sessionCount = 0;
-let timerInterval;
+// STATE VARIABLES - Track timer state and session progress
+let timeLeft = 1500; // Time remaining in seconds (25 minutes)
+let currentMode = "work"; // Current mode: work, short, or long break
+let isRunning = false; // Is timer currently running
+let sessionCount = 0; // Number of completed work sessions
+let timerInterval; // Interval ID for timer countdown
 
-// ===== DOM ELEMENTS FOR MANUPILATON AND ADDING FUNCTIONALTY =====
-// - Timer for tracking the time
-// - start btn for starting the time
-// - pause btn  for pausing the time
-// - reset btn for reseting the time
-// - sessionCount for count sessions
-// - timer-modes for time modes
+// DOM ELEMENTS - Get timer display, buttons, and controls
 const timerModes = document.querySelectorAll(".mode-btn");
 const timer = document.getElementById("timer");
 const startBtn = document.getElementById("startBtn");
@@ -24,129 +17,98 @@ const pauseBtn = document.getElementById("pauseBtn");
 const resetBtn = document.getElementById("resetBtn");
 const sessionCountElem = document.getElementById("sessionCount");
 
-// ===== FUNCTIONS I NEED =====
-// 1. startTimer() -
-//    - set isRunning to true
-//    - start setInterval that calls tick() every 1000ms (1 second)
-//    - hide start button, show pause button
-
+// START TIMER - Begin countdown
 function startTimer() {
-  // set isRunning to true
   isRunning = true;
-  // start setInterval that calls tick() every 1000ms (1 second)
-  timerInterval = setInterval(tick, 1000); // Calls tick() every 1 second
-  // hide start button, show pause button
+  timerInterval = setInterval(tick, 1000);
   startBtn.style.display = "none";
   pauseBtn.style.display = "block";
 }
-// 2. pauseTimer()
-//    - set isRunning to false
-//    - stop setInterval
-//    - hide puse button, show start button
 
+// PAUSE TIMER - Stop countdown
 function pauseTimer() {
-  // set isRunning to false
   isRunning = false;
-  // stop setInterval
   clearInterval(timerInterval);
-  // hide puse button, show start button
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
 }
 
-// 3. resetTimer()
-//    - set isRunning to false
-//    - clearInterval setInterval
-//    - set timeLeft back to starting time for current mode
-//    - hide pause button, show start button
-//    - update display
-
+// RESET TIMER - Return to starting time for current mode
 function resetTimer() {
-  // set isRunning to false
   isRunning = false;
-  // clearInterval setInterval
   clearInterval(timerInterval);
-  // set timeLeft back to starting time for current mode
+
+  // Set time based on current mode
   if (currentMode === "work") {
-    timeLeft = 1500;
+    timeLeft = 1500; // 25 minutes
   } else if (currentMode === "long") {
-    timeLeft = 900;
+    timeLeft = 900; // 15 minutes
   } else {
-    timeLeft = 300;
+    timeLeft = 300; // 5 minutes
   }
-  //hide pause button, show start button
+
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
-  //update display
   updateDisplay();
 }
-// 4. updateDisplay() -
-//    - convert timeLeft (in seconds) to MM:SS format
-//    - show it in timer display element
+
+// UPDATE DISPLAY - Convert seconds to MM:SS format and show
 function updateDisplay() {
-  // 1. Calculate minutes from timeLeft
   let minutes = Math.floor(timeLeft / 60);
-  // 2. Calculate seconds from timeLeft
   let seconds = timeLeft % 60;
-  // 3. Format both with leading zeros
+
   let formattedMinutes = minutes.toString().padStart(2, "0");
   let formattedSeconds = seconds.toString().padStart(2, "0");
-  // 4. Display in timer element as "MM:SS"
+
   timer.textContent = formattedMinutes + ":" + formattedSeconds;
 }
 
+// SWITCH MODE - Change between work and break modes
 function switchMode(event) {
-  // 1. Get which mode was clicked (event.target.dataset.mode)
-  let getMode = event.target.dataset.mode;
+  let mode = event.target.dataset.mode;
+  currentMode = mode;
 
-  // 2. Update currentMode variable
-  currentMode = getMode;
-  // 3. Set timeLeft based on mode (work=1500, short=300, long=900)
-  if (getMode === "work") {
-    timeLeft = 1500;
+  // Set time based on selected mode
+  if (mode === "work") {
+    timeLeft = 1500; // 25 minutes
+  } else if (mode === "long") {
+    timeLeft = 900; // 15 minutes
+  } else if (mode === "short") {
+    timeLeft = 300; // 5 minutes
   }
-  if (getMode === "long") {
-    timeLeft = 900;
-  }
-  if (getMode === "short") {
-    timeLeft = 300;
-  }
-  // 4. Remove 'active' class from all buttons
-  timerModes.forEach((mode) => {
-    mode.classList.remove("active");
-  });
-  // 5. Add 'active' class to clicked button
+
+  // Update active button
+  timerModes.forEach((btn) => btn.classList.remove("active"));
   event.target.classList.add("active");
-  // 6. Call updateDisplay()
+
   updateDisplay();
 }
 
-// 6. tick()
-//    - countdown the timer by 1 SECOND
-//    - subtract 1 from timeLeft
-//    - update display
-//    - if timeLeft reaches 0, stop timer and maybe increase session count
+// TICK - Decrease time by 1 second and check if finished
 function tick() {
-  timeLeft = timeLeft - 1;
+  timeLeft--;
   updateDisplay();
-if (timeLeft <= 0) {
-    pauseTimer()
+
+  // Check if timer finished
+  if (timeLeft <= 0) {
+    pauseTimer();
+
+    // Increment session count if work session completed
     if (currentMode === "work") {
-        sessionCount++
-       sessionCountElem.textContent =  sessionCount
-      
+      sessionCount++;
+      sessionCountElem.textContent = sessionCount;
     }
-}
+  }
 }
 
-// ===== EVENT LISTENERS I NEED =====
-// - Click on start button → call startTimer()
-startBtn.addEventListener('click', startTimer)
-// - Click on pause button → call pauseTimer()
-pauseBtn.addEventListener('click',pauseTimer)
-// - Click on reset button → call resetTimer()
-resetBtn.addEventListener('click',resetTimer)
-// - Click on mode buttons → call switchMode()
-timerModes.forEach((mode)=>{
-mode.addEventListener('click',switchMode)
-})
+// EVENT LISTENERS - Attach button click handlers
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
+
+timerModes.forEach((mode) => {
+  mode.addEventListener("click", switchMode);
+});
+
+// INITIALIZE - Set initial display
+updateDisplay();

@@ -1,40 +1,36 @@
-// grab elems for manupilation
+// ============================================
+// MODAL/POPUP
+// ============================================
+
+// DOM ELEMENTS - Get modal overlay, buttons, and controls
 const modalOverlay = document.querySelector(".modal-overlay");
 const closeBtn = document.querySelector(".close-btn");
 const openModalBtn = document.querySelector(".open-modal-btn");
-// listing for events
-openModalBtn.addEventListener("click", () => {
-  // adding active class to modalOverlay  so popup open
-  modalOverlay.classList.add("active");
-  // Prevents scrolling
-  document.body.classList.add('modal-open');
-});
-// listing for events
-closeBtn.addEventListener("click", () => {
-  // removing active class from modalOverlay so popup close
-  modalOverlay.classList.remove("active");
-  // Allows scrolling
-  document.body.classList.remove('modal-open');
-});
-// listing for events with excat target to check where clicked
-modalOverlay.addEventListener("click", (events) => {
-  // validation if its clicked on modalOverlay if true so we can remove the active class
-  if (events.target === modalOverlay) {
-    // removing active class from modalOverlay so popup close
-    modalOverlay.classList.remove("active");
-    // Allows scrolling
-    document.body.classList.remove('modal-open');
-  }
 
+// OPEN MODAL - Show modal and prevent background scrolling
+openModalBtn.addEventListener("click", () => {
+  modalOverlay.classList.add("active");
+  document.body.classList.add("modal-open");
 });
-// listing for events on entire document
-document.addEventListener('keydown', (events) => {
-    // validation if its clicked on Escape if true so we can remove the active class
-   if (events.key === "Escape") {
-     // removing active class from modalOverlay so popup close
-      modalOverlay.classList.remove("active");
-      // Allows scrolling
-      document.body.classList.remove('modal-open');
-   }
-   
-})
+
+// CLOSE BUTTON - Hide modal and restore scrolling
+closeBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("active");
+  document.body.classList.remove("modal-open");
+});
+
+// CLICK OUTSIDE - Close modal when clicking on overlay background
+modalOverlay.addEventListener("click", (event) => {
+  if (event.target === modalOverlay) {
+    modalOverlay.classList.remove("active");
+    document.body.classList.remove("modal-open");
+  }
+});
+
+// ESCAPE KEY - Close modal when Escape key is pressed
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    modalOverlay.classList.remove("active");
+    document.body.classList.remove("modal-open");
+  }
+});

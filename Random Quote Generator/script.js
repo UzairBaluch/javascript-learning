@@ -1,8 +1,12 @@
-// Array of quote objects - each has quote text and author
+// ============================================
+// QUOTE GENERATOR
+// ============================================
+
+// QUOTES DATA - Array of inspirational quotes with authors
 let quotes = [
   {
     quote:
-      "It isn’t normal to know what we want. It is a rare and difficult psychological achievement.",
+      "It isn't normal to know what we want. It is a rare and difficult psychological achievement.",
     author: "Abraham Maslow",
   },
   {
@@ -66,7 +70,7 @@ let quotes = [
     author: "Theodore Roosevelt",
   },
   {
-    quote: "It always seems impossible until it’s done.",
+    quote: "It always seems impossible until it's done.",
     author: "Nelson Mandela",
   },
   {
@@ -86,24 +90,24 @@ let quotes = [
     quote: "Life is really simple, but we insist on making it complicated.",
     author: "Confucius",
   },
-]; // ... (all your quotes)
+];
 
-// Select HTML elements to display quotes
+// DOM ELEMENTS - Get quote display, author display, and button
 let quoteElem = document.getElementById("quote");
 let authorElem = document.getElementById("author");
-let quoteElemBtn = document.getElementById("newQuoteBtn");
+let newQuoteBtn = document.getElementById("newQuoteBtn");
 
-// Function to display a random quote
+// UPDATE QUOTE - Display a random quote from the array
 function updateQuote() {
-  // Generate random index based on array length
-  let randomNumber = Math.floor(Math.random() * quotes.length);
-  // Get random quote object from array
-  let getQoute = quotes[randomNumber];
-  // Display quote text and author
-  quoteElem.textContent = getQoute.quote;
-  authorElem.textContent = getQoute.author;
+  let randomIndex = Math.floor(Math.random() * quotes.length);
+  let randomQuote = quotes[randomIndex];
+
+  quoteElem.textContent = randomQuote.quote;
+  authorElem.textContent = randomQuote.author;
 }
-// Show initial quote on page load
+
+// INITIAL QUOTE - Show random quote on page load
 updateQuote();
-// Add event listener to button for new quotes
-quoteElemBtn.addEventListener("click", updateQuote);
+
+// NEW QUOTE BUTTON - Generate new quote on click
+newQuoteBtn.addEventListener("click", updateQuote);

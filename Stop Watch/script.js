@@ -1,18 +1,24 @@
-// Get references to all HTML elements we need to manipulate
+// ============================================
+// STOPWATCH
+// ============================================
+
+// DOM ELEMENTS - Get display and control buttons
 let display = document.getElementById("display");
 let startBtn = document.getElementById("start-btn");
 let pauseBtn = document.getElementById("pause-btn");
 let resetBtn = document.getElementById("reset-btn");
-// Var for tracking the seconds and is time runnig or not and setinerval
+
+// STATE VARIABLES - Track elapsed time and timer state
 let seconds = 0;
 let isRunning = false;
 let intervalId = null;
 
-// a function that take seconds as paramter calculate time and add 0 to time and return a formated time
+// FORMAT TIME - Convert seconds to HH:MM:SS format with leading zeros
 function formatTime(seconds) {
   let hours = Math.floor(seconds / 3600);
   let minutes = Math.floor((seconds % 3600) / 60);
   let secs = seconds % 60;
+
   if (hours < 10) {
     hours = "0" + hours;
   }
@@ -22,28 +28,29 @@ function formatTime(seconds) {
   if (secs < 10) {
     secs = "0" + secs;
   }
+
   return hours + ":" + minutes + ":" + secs;
 }
-// a function that increse time by 1 update it ui and enable puse btn and disable start btn
+
+// START TIMER - Begin counting and update display every second
 function startTimer() {
   intervalId = setInterval(function () {
     seconds++;
     display.textContent = formatTime(seconds);
   }, 1000);
+
   pauseBtn.disabled = false;
   startBtn.disabled = true;
 }
-// on click and calling function
-startBtn.addEventListener("click", startTimer);
-// a function that clear setinterval enable start btn and disbale puse btn
+
+// PAUSE TIMER - Stop counting
 function pauseTimer() {
   clearInterval(intervalId);
   pauseBtn.disabled = true;
   startBtn.disabled = false;
 }
-// on click and calling function
-pauseBtn.addEventListener("click", pauseTimer);
-// a function that call pouse timer function and set var to 0 update ui enable start btn disable pause btn
+
+// RESET TIMER - Stop timer and reset to zero
 function resetTimer() {
   pauseTimer();
   seconds = 0;
@@ -51,5 +58,8 @@ function resetTimer() {
   startBtn.disabled = false;
   pauseBtn.disabled = true;
 }
-// on click and calling function
-resetBtn.addEventListener('click',resetTimer)
+
+// EVENT LISTENERS - Attach button click handlers
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);

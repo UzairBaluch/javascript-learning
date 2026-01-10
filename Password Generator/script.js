@@ -1,9 +1,14 @@
-// Character sets for password generation
+// ============================================
+// PASSWORD GENERATOR
+// ============================================
+
+// CHARACTER SETS - Available characters for password generation
 const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowercase = "abcdefghijklmnopqrstuvwxyz";
 const numbers = "0123456789";
 const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-// Grab all elements needed for the Password Generator
+
+// DOM ELEMENTS - Get password display, controls, and options
 let passwordOutput = document.getElementById("passwordOutput");
 let copyBtn = document.getElementById("copyBtn");
 let lengthInput = document.getElementById("lengthInput");
@@ -14,77 +19,59 @@ let symbolsCheck = document.getElementById("symbolsCheck");
 let generateBtn = document.getElementById("generateBtn");
 let strengthIndicator = document.getElementById("strengthIndicator");
 
-
-// a function to generate passowrd
+// GENERATE PASSWORD - Create random password based on selected options
 function generatePassword() {
-  // getting the value from input
-  let inputValue = lengthInput.value;
-  // validation if all checkBoxes are checked or not
+  let passwordLength = lengthInput.value;
+
+  // Validate at least one character type is selected
   if (
     !uppercaseCheck.checked &&
     !lowercaseCheck.checked &&
     !numbersCheck.checked &&
     !symbolsCheck.checked
   ) {
-    // alert to show that atleast one box should be checked
-    alert("Please Check Atleast One Box");
+    alert("Please select at least one character type");
     return;
   }
-  // a empty string for adding chars after validation
+
+  // Build character pool based on selected options
   let allowedChars = "";
-  // validation if a box is checked so we cann add that chars to password
-  if (uppercaseCheck.checked) {
-    // adding the chekced char to password after the true result from checked box
-    allowedChars += uppercase;
-  }
-  // validation if a box is checked so we cann add that chars to password
-  if (lowercaseCheck.checked) {
-    // adding the chekced char to password after the true result from checked box
-    allowedChars += lowercase;
-  }
-  // validation if a box is checked so we cann add that chars to password
-  if (numbersCheck.checked) {
-    // adding the chekced char to password after the true result from checked box
-    allowedChars += numbers;
-  }
-  // validation if a box is checked so we cann add that chars to password
-  if (symbolsCheck.checked) {
-    // adding the chekced char to password after the true result from checked box
-    allowedChars += symbols;
-  }
-  // Create empty password string
+  if (uppercaseCheck.checked) allowedChars += uppercase;
+  if (lowercaseCheck.checked) allowedChars += lowercase;
+  if (numbersCheck.checked) allowedChars += numbers;
+  if (symbolsCheck.checked) allowedChars += symbols;
+
+  // Generate password by randomly selecting characters
   let password = "";
-  // Loop to build the password character by character
-  for (let i = 0; i < inputValue; i++) {
-    //Generate a random index number between 0 and allowedChars.length - 1
+  for (let i = 0; i < passwordLength; i++) {
     let randomIndex = Math.floor(Math.random() * allowedChars.length);
-    // Get the character at the random index position
-    let randomChar = allowedChars[randomIndex];
-    // adding to password
-    password += randomChar;
+    password += allowedChars[randomIndex];
   }
-  // showing the genrated password to user
+
+  // Display generated password
   passwordOutput.textContent = password;
 }
-// a eventListner for button to listen and call the functhion
-generateBtn.addEventListener("click", generatePassword);
-// a async funtcion to copy the value 
+
+// COPY PASSWORD - Copy generated password to clipboard
 async function copyPassword() {
-    let copyValue =   passwordOutput.textContent
-     // Validation
-    if (copyValue === "" || copyValue === "Click Generate to create password") {
-        alert("The Value is Empty");
-        return;
-    }
-    
-    // Copy to clipboard  wait for this to finish
-    await navigator.clipboard.writeText(copyValue)
-    // changing the button to show its copied
-    copyBtn.textContent = "Copied"
-    // a settimeout so get back the prevoius button text after timer
-    setTimeout(function() {
-    copyBtn.textContent = "Copy"
-}, 2000);
+  let password = passwordOutput.textContent;
+
+  // Validate password exists
+  if (password === "" || password === "Click Generate to create password") {
+    alert("No password to copy");
+    return;
+  }
+
+  // Copy to clipboard
+  await navigator.clipboard.writeText(password);
+
+  // Show feedback
+  copyBtn.textContent = "Copied!";
+  setTimeout(() => {
+    copyBtn.textContent = "Copy";
+  }, 2000);
 }
-// a eventListner for button to listen and call the functhion
-copyBtn.addEventListener('click',copyPassword )
+
+// EVENT LISTENERS - Attach button click handlers
+generateBtn.addEventListener("click", generatePassword);
+copyBtn.addEventListener("click", copyPassword);

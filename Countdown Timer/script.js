@@ -1,5 +1,8 @@
-// ===== DOM ELEMENTS =====
-// Grab all elements needed for the countdown timer
+// ============================================
+// COUNTDOWN TIMER
+// ============================================
+
+// DOM ELEMENTS - Get display, input fields, and control buttons
 const display = document.getElementById("display");
 const hours = document.getElementById("hours");
 const minutes = document.getElementById("minutes");
@@ -7,15 +10,14 @@ const seconds = document.getElementById("seconds");
 const startBtn = document.getElementById("startBtn");
 const resetBtn = document.getElementById("resetBtn");
 
-// ===== TRACKING VARIABLES =====
-let intervalID = null; // Stores the interval ID to control countdown
-let totalTime = 0; // Stores initial countdown time in seconds
-let remainingTime = 0; // Tracks remaining time in seconds
+// STATE VARIABLES - Track timer state
+let intervalID = null; // Stores interval ID to control countdown
+let totalTime = 0; // Initial countdown time in seconds
+let remainingTime = 0; // Current remaining time in seconds
 
-// ===== UPDATE DISPLAY FUNCTION =====
-// Converts remaining seconds to HH:MM:SS format and updates the display
+// UPDATE DISPLAY - Convert seconds to HH:MM:SS format and show on screen
 function updateDisplay() {
-  // Calculate hours, minutes, and seconds from total seconds
+  // Calculate hours, minutes, and seconds from remaining time
   let hrs = Math.floor(remainingTime / 3600);
   let mins = Math.floor((remainingTime % 3600) / 60);
   let secs = remainingTime % 60;
@@ -25,43 +27,40 @@ function updateDisplay() {
   mins = mins.toString().padStart(2, "0");
   secs = secs.toString().padStart(2, "0");
 
-  // Update the display with formatted time
+  // Update display with formatted time
   display.textContent = hrs + ":" + mins + ":" + secs;
 }
 
-// ===== START COUNTDOWN FUNCTION =====
-// Starts the countdown timer with user input values
+// START COUNTDOWN - Begin timer with user input values
 function startFunc() {
-  // Prevent starting multiple countdowns simultaneously
+  // Prevent multiple countdowns running simultaneously
   if (intervalID !== null) {
     return;
   }
 
-  // Get input values and convert to numbers
+  // Get input values and convert to total seconds
   let hourTime = Number(hours.value);
   let minutesTime = Number(minutes.value);
   let secondsTime = Number(seconds.value);
-
-  // Convert all time to total seconds
   totalTime = hourTime * 3600 + minutesTime * 60 + secondsTime;
   remainingTime = totalTime;
 
-  // Validate that user entered a valid time
+  // Validate user input
   if (totalTime === 0) {
-    alert("invalid input");
+    alert("Invalid input");
     return;
   }
 
   // Start countdown - decrease time every second
   intervalID = setInterval(() => {
-    remainingTime--; // Decrease by 1 second
-    updateDisplay(); // Update the display
+    remainingTime--;
+    updateDisplay();
 
     // Check if countdown finished
     if (remainingTime === 0) {
-      clearInterval(intervalID); // Stop the countdown
-      intervalID = null; // Reset interval ID for next use
-      alert("Time up");
+      clearInterval(intervalID);
+      intervalID = null;
+      alert("Time up!");
     }
   }, 1000);
 
@@ -71,26 +70,24 @@ function startFunc() {
   seconds.disabled = true;
 }
 
-// ===== RESET FUNCTION =====
-// Stops countdown and resets everything to default
+// RESET TIMER - Stop countdown and restore to initial state
 function resetFunc() {
-  clearInterval(intervalID); // Stop the countdown
-  intervalID = null; // Reset interval ID
+  clearInterval(intervalID);
+  intervalID = null;
 
   // Re-enable input fields
   hours.disabled = false;
   minutes.disabled = false;
   seconds.disabled = false;
 
-  // Reset all variables to default
+  // Reset all variables
   remainingTime = 0;
   totalTime = 0;
 
-  // Reset display to zero
+  // Reset display
   display.textContent = "00:00:00";
 }
 
-// ===== EVENT LISTENERS =====
-// Attach click events to buttons
+// EVENT LISTENERS - Attach button click handlers
 startBtn.addEventListener("click", startFunc);
 resetBtn.addEventListener("click", resetFunc);
