@@ -7,7 +7,7 @@ accordionHeaders.forEach((menu) => {
   menu.addEventListener("click", () => {
     // Get the content div that comes right after the clicked header (nextElementSibling)
     const content = menu.nextElementSibling;
-    
+
     // Close all accordion items first by removing 'active' class from headers and content
     // This ensures only one section is open at a time (professional accordion behavior)
     accordionHeaders.forEach((header) => {
@@ -20,3 +20,4 @@ accordionHeaders.forEach((menu) => {
     content.classList.toggle("active");
   });
 });
+//Professional accordion behavior
